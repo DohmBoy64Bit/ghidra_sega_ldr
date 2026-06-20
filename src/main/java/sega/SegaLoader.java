@@ -27,6 +27,7 @@ import ghidra.app.util.bin.ByteProvider;
 import ghidra.app.util.importer.MessageLog;
 import ghidra.app.util.opinion.AbstractLibrarySupportLoader;
 import ghidra.app.util.opinion.LoadSpec;
+import ghidra.app.util.opinion.Loader;
 import ghidra.framework.store.LockException;
 import ghidra.program.disassemble.Disassembler;
 import ghidra.program.flatapi.FlatProgramAPI;
@@ -86,7 +87,12 @@ public class SegaLoader extends AbstractLibrarySupportLoader {
 	}
 
 	@Override
-	protected void load(ByteProvider provider, LoadSpec loadSpec, List<Option> options, Program program, TaskMonitor monitor, MessageLog log) throws IOException {
+	protected void load(Program program, Loader.ImporterSettings importerSettings) throws IOException {
+
+		ByteProvider provider = importerSettings.provider();
+		LoadSpec loadSpec = importerSettings.loadSpec();
+		TaskMonitor monitor = importerSettings.monitor();
+		MessageLog log = importerSettings.log();
 
 		monitor.setMessage(String.format("%s : Start loading", getName()));
 
